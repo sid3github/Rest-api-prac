@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Emp = require('../models/employees');
 
 //get list of employees from db
 router.get('/employees',function (req,res) {
@@ -7,12 +8,8 @@ router.get('/employees',function (req,res) {
 });
 //adding a new employee to db
 router.post('/employees',function (req,res) {
-    console.log(req.body);
-    res.send({
-        type: 'POST',
-        name: req.body.name,
-        age : req.body.age,
-        gender: req.body.gender
+    Emp.create(req.body).then(function (emp) {
+        res.send(emp);
     });
 });
 //updating a employee to db
