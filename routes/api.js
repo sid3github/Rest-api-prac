@@ -11,7 +11,8 @@ router.post('/employees',function (req,res) {
     res.send({
         type: 'POST',
         name: req.body.name,
-        age : req.body.age
+        age : req.body.age,
+        gender: req.body.gender
     });
 });
 //updating a employee to db
