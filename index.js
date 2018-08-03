@@ -1,22 +1,48 @@
 const express = require('express');
-const routes = require('./routes/api');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const Emp = require('./models/employees');
 
 //set up express app
-const app = express();
+const server = express();
 
 //connect to mongodb
 mongoose.connect('mongodb://localhost/empgo');
-mongoose.Promise = global.Promise;
+//mongoose.Promise = global.Promise;
 
-app.use(bodyParser.json());
+server.use(bodyParser.json());
+
+//server.use('/api');
 
 //initialize routes
-app.use('/api',routes);
+server.get('/employees',function (req,res,next) {
+    res.send({type: 'GET'});
+});
+//adding a new employee to db
+server.post('/employees',function (req,res,next) {
+    Emp.create(req.body).then(function (emp) {
+        res.send(emp);
+    }).catch(next);
+});
+//updating a employee to db
+server.put('/employees/:id',function (req,res,next) {
+    Emp.findByIdAndUpdate({_id:req.params.id},req.body).then(function(emp){
+        res.send(emp);
+    });
+});
+//deleting a employee from db
+server.delete('/employees/:id',function (req,res,next) {
+    Emp.findByIdAndRemove({_id:req.params.id}).then(function(emp){
+        res.send(emp);
+    });
+});
 
+//Error handling middleware.
+server.use(function(err,req,res,next){
+    res.send({error: err.message});
+});
 
 //listen for a request
-app.listen(2000, function () {
+server.listen(2000, function () {
     console.log('the port is running on 2000');
 });

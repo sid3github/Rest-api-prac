@@ -15,8 +15,6 @@ const EmpSchema = new Schema({
     }
 });
 
-const Emp = mongoose.model('emp',EmpSchema);
-
-// export this schema
+const Emp = mongoose.model('emp',EmpSchema,'emmp');
 
 module.exports = Emp;
