@@ -12,6 +12,8 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "express-validation": "^1.0.2",
+    "express-validator": "^5.3.0",
     "mongoose": "^5.2.6",
     "nodemon": "^1.18.3"
   },
