@@ -38,9 +38,9 @@ server.post('/employees',[
 });
 //  server.post('/employees,function(req,res,next){
 //  Emp.create(req.body).then(function(emp){
-//  res.send(emp)
-//  }).catch(next)
-// })
+//  res.send(emp);
+//  }).catch(next);
+// });
 
 
 //updating a employee to db
