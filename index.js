@@ -17,13 +17,13 @@ server.use(bodyParser.json());
 
 //initialize routes
 server.get('/employees',function (req,res,next) {
-    Emp.find(req.body).then(function (emp){
-    res.json(emp);
-});
+    Emp.find({}).then(function (data){
+    res.json(data);
+   });
 });
 //adding a new employee to db
 //the .create method will both create and save the data received from the client and then again will be forwarded to client itself.
-server.post('/employees',[
+server.post('/employees',[ 
     check('name').isString(),
     check('age').isNumeric(),
     check('gender').isString()
@@ -32,8 +32,15 @@ server.post('/employees',[
     if(!errors.isEmpty()){
          return res.json({error: errors.array()});
     }
-    Emp.create(req.body).then(function (emp) {
-        res.send(emp);
+    let data = new Emp();
+    data.name = req.body.name;
+    data.age = req.body.age;
+    data.gender = req.body.gender;
+
+    data.save().then(user => {
+        res.json(user);
+    }).catch(err => {
+        next(err);
     });
 });
 //  server.post('/employees,function(req,res,next){
